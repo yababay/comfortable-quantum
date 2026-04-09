@@ -3,12 +3,14 @@ import { fillY, getY, margin, getHeight, isPhilosophical } from './util'
 import type { HistoricalStages } from './types'
 import raw from './quantum-history.json?raw'
 
-export default (div: HTMLDivElement) => {
+export default (div: HTMLDivElement, showOptional = false) => {
+
+    //console.log('show opt.', showOptional)
 
     const data = JSON.parse(raw) as HistoricalStages
     const { stages } = data
 
-    fillY(data)
+    fillY(data, showOptional)
 
     const width = div.clientWidth
     const height = getHeight()
@@ -42,7 +44,7 @@ export default (div: HTMLDivElement) => {
             .attr('x2', width - margin.right)
             .attr('y2', yl)
             .attr('stroke', 'silver')
-        events.forEach(event => {
+        events.filter(({optional}) => showOptional || !optional ).forEach(event => {
             const { name, year, note, link } = event
             const isPhil = isPhilosophical(event)
             const y = getY(name)

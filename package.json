@@ -8,7 +8,7 @@
 		"dev": "vite dev",
 		"img:optimize": "./scripts/optimize-images.sh",
 		"build": "vite build",
-		"deploy": "vite build && GIT_USER=yababay gh-pages -d build",
+		"deploy": "vite build && GIT_USER=yababay gh-pages -d build --nojekyll",
 		"postbuild": "npm run sync && npm run git:return",
 		"git:local": "read -p 'Суть коммита: ' COMMIT; git add . ; git commit -am $COMMIT",
 		"git:remote": "git push origin main",

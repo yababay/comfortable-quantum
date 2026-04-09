@@ -22,11 +22,12 @@ export const getPhilosophicalEvents = (events: HistoricalEvents) => events.filte
 
 export const getPhisicalEvents = (events: HistoricalEvents) => events.filter(event => !isPhilosophical(event))
 
-export const fillY = (data: HistoricalStages) => {
+export const fillY = (data: HistoricalStages, showOptional = false) => {
     const { stages } = data
     let y = margin.top
     stages.forEach((stage, i) => {
-        const { name, events } = stage
+        let { name, events } = stage
+        events = events.filter(({optional}) => showOptional || !optional)
         const stageName = name
         y += SEMI_HEADER_HEIGHT
         yMap.set(name, y)
