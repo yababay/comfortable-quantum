@@ -5,7 +5,7 @@ svg circle.phisical:hover {
 }
 
 svg circle.philosophical:hover {
-  stroke: rgb(175, 117, 9);
+  stroke: orange;
   stroke-width: 2px;
   cursor: pointer;
 }
