@@ -8,13 +8,10 @@
 		"dev": "vite dev",
 		"img:optimize": "./scripts/optimize-images.sh",
 		"build": "vite build",
-		"deploy": "vite build && GIT_USER=yababay gh-pages -d build --nojekyll",
-		"postbuild": "npm run sync && npm run git:return",
+		"postbuild": "GIT_USER=yababay gh-pages -d build --nojekyll",
 		"git:local": "read -p 'Суть коммита: ' COMMIT; git add . ; git commit -am $COMMIT",
 		"git:remote": "git push origin main",
-		"git": "npm run git:local && npm run git:remote",
-		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
-		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"
+		"git": "npm run git:local && npm run git:remote"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^7.0.0",

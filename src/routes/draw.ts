@@ -3,16 +3,21 @@ import { fillY, getY, margin, getHeight, isPhilosophical } from './util'
 import type { HistoricalStages } from './types'
 import raw from './quantum-history.json?raw'
 
-export default (div: HTMLDivElement, showOptional = false) => {
+let width = 0
 
-    //console.log('show opt.', showOptional)
+export default (div: HTMLDivElement, showOptional = false) => {
 
     const data = JSON.parse(raw) as HistoricalStages
     const { stages } = data
 
-    fillY(data, showOptional)
+    stages.forEach(stage => {
+        const { events } = stage
+        stage.events = events.filter(({optional}) => !optional || showOptional)
+    })
 
-    const width = div.clientWidth
+    fillY(data)
+
+    if(!width) width = div.clientWidth // у скрытой схемы нулевая длина, поэтому ориентируемся по наибольшей.
     const height = getHeight()
 
     const svg = d3.select(div)
@@ -21,8 +26,8 @@ export default (div: HTMLDivElement, showOptional = false) => {
         .attr("height", height);
 
     const r = 5
-    const dx = 10 // gap
-    const dy = r // gap
+    const dx = 10
+    const dy = r
     const xPhisicalC = margin.left
     const xPhilosophicalC = width - margin.left - 150
     const links = new Array<string[]>() 
@@ -44,7 +49,7 @@ export default (div: HTMLDivElement, showOptional = false) => {
             .attr('x2', width - margin.right)
             .attr('y2', yl)
             .attr('stroke', 'silver')
-        events.filter(({optional}) => showOptional || !optional ).forEach(event => {
+        events.forEach(event => {
             const { name, year, note, link } = event
             const isPhil = isPhilosophical(event)
             const y = getY(name)
@@ -59,8 +64,6 @@ export default (div: HTMLDivElement, showOptional = false) => {
                 .append("title").text(note || '')
 
             g.append("text")
-                //.attr("y", getY(name))
-                //.attr("x", isPhil ? xPhilosophicalT : xPhisicalT)
                 .attr("dx", dx)
                 .attr("dy", dy)
                 .attr("width", 300)
@@ -68,7 +71,6 @@ export default (div: HTMLDivElement, showOptional = false) => {
                 .text(`${name} (${year})`)
                 .style("font-size", "12px")
                 .classed(isPhil ? "philosophical" : "phisical", true)
-                //.append("title").text(note || '')
         })
         links.forEach(([from, to]) => {
             const x = xPhilosophicalC - 8
@@ -84,9 +86,10 @@ export default (div: HTMLDivElement, showOptional = false) => {
                 .attr("fill", "none")
                 .attr("stroke", "orange")
                 .attr("stroke-width", 1.5)
-                .attr("stroke-dasharray", "4,4") // Делаем линию пунктирной
+                .attr("stroke-dasharray", "4,4")
                 .attr("opacity", 0.6)
-                .style("pointer-events", "none"); // Чтобы не мешала кликам по узлам
+                .style("pointer-events", "none");
         })
     })
+    console.log(links)
 }

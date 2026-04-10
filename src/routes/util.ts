@@ -6,7 +6,7 @@ const SEMI_HEADER_HEIGHT = HEADER_HEIGHT / 2
 const SEMI_LINE_HEIGHT = LINE_HEIGHT / 2
 const STAPE_GAP = 12
 
-export const margin = { "top": 50, "right": 50, "bottom": 50, "left": 50 }
+export const margin = { "top": 10, "right": 50, "bottom": 10, "left": 50 }
 
 const yMap = new Map<string, number>()
 const parentByChild = new Map<string, string>()
@@ -22,12 +22,11 @@ export const getPhilosophicalEvents = (events: HistoricalEvents) => events.filte
 
 export const getPhisicalEvents = (events: HistoricalEvents) => events.filter(event => !isPhilosophical(event))
 
-export const fillY = (data: HistoricalStages, showOptional = false) => {
+export const fillY = (data: HistoricalStages) => {
     const { stages } = data
     let y = margin.top
     stages.forEach((stage, i) => {
-        let { name, events } = stage
-        events = events.filter(({optional}) => showOptional || !optional)
+        const { name, events } = stage
         const stageName = name
         y += SEMI_HEADER_HEIGHT
         yMap.set(name, y)
