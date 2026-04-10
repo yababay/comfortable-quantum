@@ -6,12 +6,12 @@
 	"scripts": {
 		"bro": "BROWSER=firefox vite dev --open",
 		"dev": "vite dev",
-		"img:optimize": "./scripts/optimize-images.sh",
-		"build": "vite build",
-		"postbuild": "GIT_USER=yababay gh-pages -d build --nojekyll",
 		"git:local": "read -p 'Суть коммита: ' COMMIT; git add . ; git commit -am $COMMIT",
 		"git:remote": "git push origin main",
-		"git": "npm run git:local && npm run git:remote"
+		"git": "npm run git:local && npm run git:remote",
+		"build": "vite build",
+		"postbuild": "GIT_USER=yababay gh-pages -d build --nojekyll",
+		"img": "./scripts/optimize-images.sh"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^7.0.0",
