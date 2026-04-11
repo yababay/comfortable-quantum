@@ -5,6 +5,22 @@ import raw from './quantum-history.json?raw'
 
 let width = 0
 
+// Константы для настройки «чувства прекрасного»
+const SHORT_DIST_THRESHOLD = 100;
+const ARC_FLEXIBILITY = 0.8;
+const GLOBAL_ARC_FACTOR = 0.3;
+
+function getArcRadius(dx: number, dy: number) {
+    const distTotal = Math.sqrt(dx * dx + dy * dy);
+    const distVertical = Math.abs(dy); // расстояние между уровнями
+
+    if (distVertical < SHORT_DIST_THRESHOLD) {
+        return distTotal * ARC_FLEXIBILITY;
+    }
+    
+    return width * GLOBAL_ARC_FACTOR - distTotal;
+}
+
 export default (div: HTMLDivElement, showOptional = false) => {
 
     const data = JSON.parse(raw) as HistoricalStages
@@ -86,7 +102,9 @@ export default (div: HTMLDivElement, showOptional = false) => {
             }
             const dx = x2 - x1;
             const dy = y2 - y1;
-            let dr = width * .3 - Math.sqrt(dx * dx + dy * dy);
+
+            let dr = getArcRadius(dx, dy);
+
             svg.append("path")
                 .attr("d", `M${x2},${y2} A${dr},${dr} 0 0,1 ${x1},${y1}`)
                 .attr("fill", "none")
@@ -97,5 +115,4 @@ export default (div: HTMLDivElement, showOptional = false) => {
                 .style("pointer-events", "none");
         })
     })
-    console.log(links)
 }
