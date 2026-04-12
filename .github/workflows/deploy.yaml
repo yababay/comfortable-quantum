@@ -25,8 +25,8 @@ jobs:
             echo "${{ secrets.SSH_CONFIG }}" > /home/runner/.ssh/config
             chmod 600 /home/runner/.ssh/longread
             chmod 600 /home/runner/.ssh/config
-      - run: npm install
+      - run:  npm install
       - name: Build the project
         run:  npx vite build
       - name: Deploy pages
-        run:  GIT_USER=yababay npx gh-pages -d build -u "Михаил Беляков <bigbelk@live.ru>" -r gh:yababay/comfortable-quantum.git
+        run:  npm run deploy # GIT_USER=yababay npx gh-pages -d build -u "Михаил Беляков <bigbelk@live.ru>" -r gh:yababay/comfortable-quantum.git
