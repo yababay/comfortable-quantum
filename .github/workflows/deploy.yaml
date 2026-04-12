@@ -26,6 +26,7 @@ jobs:
             chmod 600 /home/runner/.ssh/longread
             chmod 600 /home/runner/.ssh/config
             git remote set-url origin https://x-access-token:${{ secrets.QUANTUM_TOKEN }}@://github.com
+      - name: Install
         run:  npm install
       - name: Build the project
         run:  npx vite build
