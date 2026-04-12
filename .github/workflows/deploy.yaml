@@ -30,4 +30,4 @@ jobs:
       - name: Build the project
         run:  npx vite build
       - name: Deploy pages
-        run:  npm run deploy  # GIT_USER=yababay npx gh-pages -d build -u "Михаил Беляков <bigbelk@live.ru>" -r gh:yababay/comfortable-quantum.git
+        run:  GH_TOKEN="${{ secrets.QUANTUM_TOKEN }}" npx gh-pages -d build --nojekyll -u "Михаил Беляков <bigbelk@live.ru>" -r gh:yababay/comfortable-quantum.git
