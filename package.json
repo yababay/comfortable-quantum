@@ -10,7 +10,7 @@
 		"git:remote": "git push origin main",
 		"git": "npm run git:local && npm run git:remote",
 		"build": "vite build",
-		"deploy": "GIT_USER=yababay gh-pages -d build --nojekyll -u 'Михаил Беляков <michaelbelyakov1967@gmail.com>'",
+		"deploy": "GIT_USER=yababay gh-pages -d build --nojekyll -u 'Михаил Беляков <bigbelk@live.ru>'",
 		"img": "./scripts/optimize-images.sh"
 	},
 	"devDependencies": {
